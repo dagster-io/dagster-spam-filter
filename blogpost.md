@@ -319,20 +319,15 @@ def create_database():
     """
     )
 
+
+if __name__ == "__main__":
+    create_database()
+    conn = duckdb.connect("./database.duckdb")
     tables = conn.execute("SHOW TABLES").fetchall()
     print(tables)
 ```
 
-Now update \_\_init\_\_.py to run create_database() whenever you run “dagster dev” from the command line.
-
-```python
-# __init__.py
-
-from . import database
-...
-
-database.create_database()
-```
+Run “python database.py” from the command line to create the DuckDB database and tables.
 
 It’s necessary to create a Dagster resource so that the database is also accessible within our workflow. The following resource looks confusing, but it serves two (hopefully) straightforward purposes.
 
